@@ -18,8 +18,8 @@ Designed for Discourse forums, the bot reacts selectively to new posts with cust
 ## Key Features
 
 - **Contextual AI replies:** Powered by Mistral with a custom prompt, TheNode-Butler adds value to each conversation with relevant, reflective messages.
-- **Configurable engagement:** Randomized reply probability (default: 38%) keeps the bot’s presence natural and non-intrusive.
-- **Direct interaction:** When users reply directly to TheNode-Butler, it always responds.
+- **Configurable engagement:** The bot uses a random number generator (default: 38% probability) to decide whether to reply to a new post. This keeps its presence natural, unpredictable, and non-intrusive.
+- **No double replies:** Before responding, TheNode-Butler checks if the post is truly new by comparing its ID with a stored "last processed post" value. This ensures the bot never replies twice to the same message.
 - **Easy integration:** Built as a modular n8n workflow.  
 - **Fully customizable:** Edit prompt, bot character, reply chance, and more for your community’s needs.
 - **Self-hosted:** Keep control over your data and workflow.
@@ -31,20 +31,20 @@ Designed for Discourse forums, the bot reacts selectively to new posts with cust
 1. **Post Detection:**  
    n8n checks the Discourse API for new posts every few minutes.
 
-2. **Randomized Engagement:**  
-   The bot decides—based on a configurable probability—whether to reply.
+2. **Duplicate Protection:**  
+   The bot compares each post’s ID to a stored value (e.g., `last_post_id.txt`) to make sure it only processes new posts and never replies to the same message twice.
 
-3. **AI-Powered Response:**  
-   For selected posts, the content is sent to a Mistral AI model with a tailored prompt.
+3. **Randomized Engagement:**  
+   For each new post, a random number generator decides whether the bot should reply, based on a configurable probability (default: 38%).
 
-4. **Forum Posting:**  
+4. **AI-Powered Response:**  
+   If selected, the post’s content is sent to a Mistral AI model with a tailored prompt for context-aware, engaging replies.
+
+5. **Forum Posting:**  
    The AI-generated reply is posted back to the forum under the bot’s username.
 
-5. **Reply-to-Bot Logic:**  
-   When users reply directly to TheNode-Butler, it always responds (skipping the randomness).
-
-6. **Memory Management:**  
-   The bot saves the last processed post ID to avoid duplicate replies.
+6. **Memory Update:**  
+   The bot updates its saved post ID after a successful reply, maintaining reliable operation.
 
 ---
 
@@ -56,30 +56,11 @@ Designed for Discourse forums, the bot reacts selectively to new posts with cust
 
 ---
 
-## Getting Started
-
-_Coming soon:_  
-A clean n8n workflow export and setup instructions will be added here.  
-The project is currently being prepared for open source release—stay tuned!
-
----
-
 ### Requirements
 
 - A running [n8n](https://n8n.io) instance
 - Discourse API access (API key, user)
 - [Mistral AI](https://mistral.ai) or compatible API access
-
----
-
-## Roadmap
-
-- [x] Smart, context-aware AI replies  
-- [x] Randomized engagement  
-- [x] Direct reply-to-bot logic  
-- [ ] Full workflow export  
-- [ ] Setup and configuration guide  
-- [ ] Multi-platform support (beyond Discourse)
 
 ---
 
